@@ -1,0 +1,12 @@
+site_name: 鲲鹏云联 - 开发者文档
+theme: mkdocs
+theme_dir: sqlend_theme
+copyright: 'Copyright © 2015～2016 汉中鲲鹏软件开发有限公司版权所有'
+pages:
+    - '简介': 'index.md'
+    - '快速上手': 'quickstart.md'
+    - 'Js-like 语言': 'js-like.md'
+    - '数据库操作': 'sql.md'
+    - '开发向导':
+        - '启用 HTTPS 协议': 'https.md'
+    - '常见问题': 'faq.md'
