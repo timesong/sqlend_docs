@@ -50,3 +50,76 @@
         }
     })
 ```
+
+## 插入操作
+
+* 插入一条订单信息
+
+```javascript
+    /*
+     * 插入对象的属性名对应数据表中的列名，调用 insert 方法即可完成插入
+     */ 
+    var order = {
+        date: '2018-01-24',
+        title: '购买 iPhone X',
+        amount: 6800.0,
+        pay_method: 'alipay'
+    }
+
+    var orderId = db.insert('orders', order)
+```
+
+## 更新操作
+
+* 更新订单信息
+
+```javascript
+    /*
+     * 插入方法的基础上可选 where 参数，指定更新的条件
+     */ 
+    var order = {
+        date: '2018-01-24',
+        title: '购买 iPhone X',
+        amount: 6800.0,
+        pay_method: 'alipay'
+    }
+
+    db.update('orders', order, {
+        where: {
+            id: oldOrderId
+        }
+    })
+```
+
+## 删除操作
+
+* 删除所有数据
+
+```javascript
+    db.delete('orders')
+```
+
+* 删除符合条件的数据
+
+```javascript
+    db.delete('orders', {
+        where: {
+            id: delOrderId
+        }
+    })
+```
+
+## 补充
+
+* where 对象生成对应的 WHERE 子句时，默认使用 AND 连接条件，需要使用 OR 条件时应采用下面的方法：
+
+```javascript
+    var orders = db.select('orders', {
+        where: {
+            '||': {                             // || is OR
+                'date__gte': '2017-12-12',      // gte： >=
+                'name__like': '%iPhone%'
+            }
+        }
+    })
+```
