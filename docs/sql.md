@@ -1,8 +1,41 @@
 # 数据库操作
 
-鲲鹏云联采用更加 JS 的方式来操作数据库，将 SQL 语句与 Array，Object 对象平滑的关联起来。下面通过一些例子来演示：
+鲲鹏云联采用更加 JS 的方式来操作数据库，将 SQL 语句与 Array，Object 对象平滑的关联起来。
+
+## 全局对象
+
+数据库操作的全局对象是 db,包含以下 方法：
+
+1. 查询方法：db.select
+2. 插入方法: db.insert
+3. 更新方法: db.update
+4. 删除方法: db.delete
 
 ## 查询操作
+
+```javascript
+var options = {
+    columns: [db.raw('*')],
+    where: {
+        id: objId
+    },
+    order_by: ['col_1', 'col_2 desc'],
+    group_by: ['col_1', 'col_2'],
+    limit: 20,
+    offset: 0,
+    format: 'array',
+    ...
+}
+
+var data = db.select('table_name', options)
+
+```
+
+* **format** 参数有四种可选值：
+1. *array* 默认值，返回对象的数组，形如：[{col: 'a', col2: 'b', ...}, ...]
+2. *table* 返回数据表格，形如：[['col1', 'col2', 'col3'], ['col1', 'col2', 'col3'], ...]
+3. *object* 返回单个对象，形如：{col: 'a', col2: 'b', ...}
+4. *scalar* 返回标量值，即第一行第一列的值，形如：'col1'
 
 * 选择所有的订单信息
 
@@ -15,9 +48,7 @@
 ```javascript
     /*
      * 本例里面有两个参数 format 和 where
-     * format 可选值为 ['object', 'table', 'scalar'] 默认为 table，返回表中所有的行信息
-     * format 的值为 object, 以 Js 对象的形式返回一行信息
-     * format 的值为 scalar, 返回第一行第一列的值；
+     * format 可选值为 ['array', 'object', 'table', 'scalar'] 默认为 array
      * where 是查询条件
      */
     var order = db.select('orders', {
